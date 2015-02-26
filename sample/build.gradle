@@ -3,17 +3,29 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
-apply plugin: 'android-library'
+apply plugin: 'com.android.application'
 
 dependencies {
     compile project(':library')
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion = '19.0.1'
+    compileSdkVersion 21
+    buildToolsVersion = '21.1.0'
+
+    defaultConfig {
+        applicationId "com.tjerkw.slideexpandable.sample"
+        minSdkVersion 10
+        targetSdkVersion 21
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
