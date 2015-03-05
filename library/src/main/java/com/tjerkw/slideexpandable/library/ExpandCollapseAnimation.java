@@ -1,10 +1,9 @@
 package com.tjerkw.slideexpandable.library;
 
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.LinearLayout;
 
 /**
  * Animation that either expands or collapses a view by sliding it down to make it visible.
@@ -19,7 +18,7 @@ public class ExpandCollapseAnimation extends Animation {
 	private int mType;
 	public final static int COLLAPSE = 1;
 	public final static int EXPAND = 0;
-	private LinearLayout.LayoutParams mLayoutParams;
+	private ViewGroup.MarginLayoutParams mLayoutParams;
 
 	/**
 	 * Initializes expand collapse animation, has two types, collapse (1) and expand (0).
@@ -28,10 +27,9 @@ public class ExpandCollapseAnimation extends Animation {
 	 * 1 will collapse view and set to gone
 	 */
 	public ExpandCollapseAnimation(View view, int type) {
-
 		mAnimatedView = view;
 		mEndHeight = mAnimatedView.getMeasuredHeight();
-		mLayoutParams = ((LinearLayout.LayoutParams) view.getLayoutParams());
+		mLayoutParams = ((ViewGroup.MarginLayoutParams) view.getLayoutParams());
 		mType = type;
 		if(mType == EXPAND) {
 
@@ -53,7 +51,6 @@ public class ExpandCollapseAnimation extends Animation {
 			} else {
 				mLayoutParams.bottomMargin = - (int) (mEndHeight * interpolatedTime);
 			}
-			Log.d("ExpandCollapseAnimation", "anim height " + mLayoutParams.bottomMargin);
 			mAnimatedView.requestLayout();
 		} else {
 			if(mType == EXPAND) {
