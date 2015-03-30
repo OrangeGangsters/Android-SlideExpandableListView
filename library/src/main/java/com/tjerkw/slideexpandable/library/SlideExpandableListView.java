@@ -13,31 +13,31 @@ import android.content.Context;
  * any ListAdapter in a SlideExpandalbeListAdapter
  */
 class SlideExpandableListView extends ListView {
-	private SlideExpandableListAdapter adapter;
+    private SlideExpandableListAdapter adapter;
 
-	public SlideExpandableListView(Context context) {
-		super(context);
-	}
+    public SlideExpandableListView(Context context) {
+        super(context);
+    }
 
-	public SlideExpandableListView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public SlideExpandableListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public SlideExpandableListView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
+    public SlideExpandableListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	/**
-	 * Collapses the currently open view.
-	 *
-	 * @return true if a view was collapsed, false if there was no open view.
-	 */
-	public boolean collapse() {
-		if(adapter!=null) {
-			return adapter.collapseLastOpen();
-		}
-		return false;
-	}
+    /**
+     * Collapses the currently open view.
+     *
+     * @return true if a view was collapsed, false if there was no open view.
+     */
+    public boolean collapse() {
+        if (adapter != null) {
+            return adapter.collapseLastOpen();
+        }
+        return false;
+    }
 
     public void setAdapter(ListAdapter adapter) {
         this.adapter = new SlideExpandableListAdapter(adapter);
@@ -50,39 +50,43 @@ class SlideExpandableListView extends ListView {
     }
 
     /**
-	 * Registers a OnItemClickListener for this listview which will
-	 * expand the item by default. Any other OnItemClickListener will be overriden.
-	 *
-	 * To undo call setOnItemClickListener(null)
-	 *
-	 * Important: This method call setOnItemClickListener, so the value will be reset
-	 */
-	public void enableExpandOnItemClick() {
-		this.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				SlideExpandableListAdapter adapter = (SlideExpandableListAdapter)getAdapter();
-				adapter.getExpandToggleButton(view).performClick();
-			}
-		});
-	}
+     * Registers a OnItemClickListener for this listview which will
+     * expand the item by default. Any other OnItemClickListener will be overriden.
+     * <p/>
+     * To undo call setOnItemClickListener(null)
+     * <p/>
+     * Important: This method call setOnItemClickListener, so the value will be reset
+     */
+    public void enableExpandOnItemClick() {
+        this.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SlideExpandableListAdapter adapter = (SlideExpandableListAdapter) getAdapter();
+                adapter.getExpandToggleButton(view).performClick();
+            }
+        });
+    }
 
 
-	@Override
-	public Parcelable onSaveInstanceState() {
-		return adapter.onSaveInstanceState(super.onSaveInstanceState());
-	}
+    @Override
+    public Parcelable onSaveInstanceState() {
+        if (adapter != null) {
+            return adapter.onSaveInstanceState(super.onSaveInstanceState());
+        }
+        return null;
+    }
 
-	@Override
-	public void onRestoreInstanceState(Parcelable state) {
-		if(!(state instanceof AbstractSlideExpandableListAdapter.SavedState)) {
-			super.onRestoreInstanceState(state);
-			return;
-		}
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof AbstractSlideExpandableListAdapter.SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
 
-		AbstractSlideExpandableListAdapter.SavedState ss = (AbstractSlideExpandableListAdapter.SavedState)state;
-		super.onRestoreInstanceState(ss.getSuperState());
-
-		adapter.onRestoreInstanceState(ss);
-	}
+        AbstractSlideExpandableListAdapter.SavedState ss = (AbstractSlideExpandableListAdapter.SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        if (adapter != null) {
+            adapter.onRestoreInstanceState(ss);
+        }
+    }
 }
