@@ -362,11 +362,12 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
     public boolean collapseLastOpen() {
         if (isAnyItemExpanded()) {
             // if visible animate it out
-            if (lastOpen != null) {
-                animateView(lastOpen, ExpandCollapseAnimation.COLLAPSE);
-            }
             openItems.set(lastOpenPosition, false);
             lastOpenPosition = -1;
+            if (lastOpen != null) {
+                animateView(lastOpen, ExpandCollapseAnimation.COLLAPSE);
+                lastOpen = null;
+            }
             return true;
         }
         return false;
