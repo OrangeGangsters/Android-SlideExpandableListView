@@ -1,12 +1,12 @@
 package com.tjerkw.slideexpandable.library;
 
+import android.content.Context;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.content.Context;
 
 /**
  * Simple subclass of listview which does nothing more than wrap
@@ -70,6 +70,7 @@ class SlideExpandableListView extends ListView {
 
     @Override
     public Parcelable onSaveInstanceState() {
+        super.onSaveInstanceState();
         if (adapter != null) {
             return adapter.onSaveInstanceState(super.onSaveInstanceState());
         }
